@@ -21,5 +21,4 @@ COPY --from=build /app/prisma ./prisma
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm prisma generate
 EXPOSE 3000
-# Run migrations only when MIGRATE_ON_START=true, otherwise start app immediately
-CMD ["sh", "-c", "if [ \"${MIGRATE_ON_START}\" = \"true\" ]; then pnpm prisma migrate deploy; fi && node dist/main"]
+CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/main"]
