@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductType {
+  HIRING
+  HELPDESK
+}
+
+enum ClientStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+model Client {
+  id                   String       @id @default(uuid())
+  productType          ProductType
+  companyName          String
+  clientSlug           String       @unique
+  status               ClientStatus @default(ACTIVE)
+
+  notionWorkspaceId    String?
+  notionBotId          String?
+  notionAccessTokenEnc String?
+  notionTokenMeta      Json?
+
+  notionDbCandidatesId String?
+  notionDbRolesId      String?
+  notionDbStagesId     String?
+
+  emailEnabled         Boolean      @default(true)
+  replyToEmail         String?
+  logoUrl              String?
+
+  monthlyEmailQuota    Int          @default(500)
+  emailsSentMonth      Int          @default(0)
+  emailsSentMonthKey   String?
+
+  webhookSecret        String
+
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  eventLogs            EventLog[]
+}
+
+model EventLog {
+  id        String   @id @default(uuid())
+  clientId  String
+  type      String
+  success   Boolean
+  message   String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, createdAt])
+}
