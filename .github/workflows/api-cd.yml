@@ -41,6 +41,7 @@ jobs:
       PORT: 3000
       BASE_URL: http://localhost:3000
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/simple_systems?schema=public
+      DIRECT_URL: postgresql://postgres:postgres@localhost:5432/simple_systems?schema=public
       TOKEN_ENC_KEY: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
       NOTION_CLIENT_ID: dummy
       NOTION_CLIENT_SECRET: dummy
