@@ -1,5 +1,6 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { Logger as PinoLogger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 async function bootstrap() {
@@ -7,6 +8,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
 
   app.enableCors();
+  app.useLogger(app.get(PinoLogger));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnv } from './config/env';
@@ -35,6 +36,26 @@ import { AdminController } from './admin/admin.controller';
         limit: 120,
       },
     ]),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+        redact: {
+          paths: [
+            'req.headers.authorization',
+            'req.headers.x-admin-key',
+            'req.headers.x-webhook-signature',
+            'req.body.candidateEmail',
+            'req.body.candidateName',
+            'req.body.phone',
+            'req.body.cvUrl',
+            'req.body.access_token',
+            'response.body.access_token',
+          ],
+          censor: '[REDACTED]',
+        },
+        customProps: () => ({ service: 'simple-systems-api' }),
+      },
+    }),
   ],
   controllers: [
     AppController,
