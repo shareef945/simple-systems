@@ -14,8 +14,8 @@ export default function Home() {
             <Sparkles className="h-3.5 w-3.5" /> Notion-native hiring for fast teams
           </p>
 
-          <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
-            Hire faster with <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">Simple Hiring</span>
+          <h1 className="brand-heading text-4xl font-bold tracking-tight md:text-6xl">
+            Hire faster with <span className="bg-gradient-to-r from-[#ea5c1c] to-[#ff8a50] bg-clip-text text-transparent">Simple Hiring</span>
           </h1>
 
           <p className="mt-5 max-w-xl text-base text-zinc-600 dark:text-zinc-300 md:text-lg">
