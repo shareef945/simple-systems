@@ -28,8 +28,9 @@ export default function SettingsPage() {
         monthlyEmailQuota,
       });
       setMsg('Saved ✅');
-    } catch (e: any) {
-      setMsg(e.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      setMsg(message);
     }
   }
 
